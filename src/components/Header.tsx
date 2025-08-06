@@ -17,6 +17,7 @@ export default function Header() {
         <Link to="/nova-doacao">Nova Doação</Link>
         <Link to="/minhas-doacoes">Minhas Doações</Link>
         <Link to="/publicas">Doações Públicas</Link>
+        <Link to="/recebidas">Recebidas</Link>
 
         {usuario ? (
           <>
