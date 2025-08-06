@@ -7,6 +7,7 @@ import NovaDoacao from "../pages/NovaDoacao";
 import MinhasDoacoes from "../pages/MinhasDoacoes";
 import DoacoesPublicas from "../pages/DoacoesPublicas";
 import DoacoesRecebidas from "../pages/DoacoesRecebidas";
+import Perfil from "../pages/Perfil";
 
 
 export default function AppRoutes() {
@@ -21,6 +22,7 @@ export default function AppRoutes() {
         <Route path="/minhas-doacoes" element={<MinhasDoacoes />} />
         <Route path="/publicas" element={<DoacoesPublicas />} />
         <Route path="/recebidas" element={<DoacoesRecebidas />} />
+        <Route path="/perfil" element={<Perfil />} />
       </Routes>
     </BrowserRouter>
   );
