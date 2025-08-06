@@ -1,11 +1,9 @@
-// lógica do localStorage aqui
-
-// Tipos
 export interface Usuario {
   id: string;
   nome: string;
   email: string;
   senha: string;
+  whatsapp?: string;
 }
 
 export interface Doacao {

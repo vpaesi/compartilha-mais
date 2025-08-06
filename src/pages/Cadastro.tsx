@@ -7,6 +7,7 @@ export default function Cadastro() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -17,6 +18,7 @@ export default function Cadastro() {
       nome,
       email,
       senha,
+      whatsapp,
     };
 
     salvarUsuario(novoUsuario);
@@ -41,6 +43,14 @@ export default function Cadastro() {
           placeholder="E-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <br />
+        <input
+          type="text"
+          placeholder="WhatsApp (com DDD)"
+          value={whatsapp}
+          onChange={(e) => setWhatsapp(e.target.value)}
           required
         />
         <br />
