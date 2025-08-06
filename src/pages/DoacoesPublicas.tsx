@@ -1,15 +1,42 @@
 import { useEffect, useState } from "react";
-import { type Doacao, listarDoacoes } from "../services/storage";
+import { useNavigate } from "react-router-dom";
+import { type Doacao, listarDoacoes, atualizarDoacao } from "../services/storage";
 
 export default function DoacoesPublicas() {
   const [doacoes, setDoacoes] = useState<Doacao[]>([]);
   const [categoriaFiltro, setCategoriaFiltro] = useState("todas");
+  const navigate = useNavigate();
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
   useEffect(() => {
     const todas = listarDoacoes();
     const disponiveis = todas.filter((d) => d.status === "disponivel");
     setDoacoes(disponiveis);
   }, []);
+
+  const handleReceber = (id: string) => {
+    if (!usuarioLogado) {
+      alert("Você precisa estar logado para receber uma doação.");
+      navigate("/login");
+      return;
+    }
+
+    const doacao = doacoes.find((d) => d.id === id);
+    if (!doacao) return;
+
+    const atualizada: Doacao = {
+      ...doacao,
+      status: "entregue",
+      recebidoPor: usuarioLogado.id,
+    };
+
+    atualizarDoacao(atualizada);
+
+    // Remover da lista exibida
+    setDoacoes((prev) => prev.filter((d) => d.id !== id));
+
+    alert("Doação marcada como recebida! Em breve o doador entrará em contato.");
+  };
 
   const doacoesFiltradas =
     categoriaFiltro === "todas"
@@ -39,7 +66,7 @@ export default function DoacoesPublicas() {
               <h3>{d.nome}</h3>
               <p><strong>Descrição:</strong> {d.descricao}</p>
               <p><strong>Categoria:</strong> {d.categoria}</p>
-              <button disabled>Quero receber</button> {/* lógica futura */}
+              <button onClick={() => handleReceber(d.id)}>Quero receber</button>
             </li>
           ))
         )}

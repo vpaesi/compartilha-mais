@@ -14,9 +14,10 @@ export interface Doacao {
   descricao: string;
   categoria: string;
   status: "disponivel" | "entregue";
-  userId: string;
+  userId: string; // quem doou
   criadoEm: string;
-  imagem?: string; // base64 ou url
+  imagem?: string;
+  recebidoPor?: string; // quem recebeu
 }
 
 // Funções para usuários
