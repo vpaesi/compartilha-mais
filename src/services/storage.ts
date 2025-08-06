@@ -26,6 +26,16 @@ export interface Doacao {
 }
 
 // Funções para usuários
+export function listarUsuarios(): Usuario[] {
+  const usuariosStr = localStorage.getItem("usuarios");
+  if (!usuariosStr) return [];
+  return JSON.parse(usuariosStr);
+}
+
+export function buscarUsuarioPorId(id: string): Usuario | undefined {
+  return listarUsuarios().find((u) => u.id === id);
+}
+
 export const salvarUsuario = (usuario: Usuario) => {
   const usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
   usuarios.push(usuario);
