@@ -44,7 +44,7 @@ export default function Home() {
           </div>
         ) : (
           <div style={estilos.acoes}>
-            <Link to="/doacoes" style={estilos.botao}>
+            <Link to="/publicas" style={estilos.botao}>
               Ver Doações
             </Link>
             <Link to="/minhas-doacoes" style={estilos.botaoSecundario}>

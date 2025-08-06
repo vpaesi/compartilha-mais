@@ -11,6 +11,7 @@ import Perfil from "../pages/Perfil";
 import ChatDoacao from "../pages/ChatDoacao";
 import ChatsAtivos from "../pages/ChatsAtivos";
 import EditarDoacao from "../pages/EditarDoacao";
+import Footer from "../components/Footer";
 
 export default function AppRoutes() {
   return (
@@ -29,6 +30,7 @@ export default function AppRoutes() {
         <Route path="/chats" element={<ChatsAtivos />} />
         <Route path="/editar-doacao/:id" element={<EditarDoacao />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }
