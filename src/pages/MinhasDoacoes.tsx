@@ -33,6 +33,14 @@ export default function MinhasDoacoes() {
     );
   };
 
+  const excluirDoacao = (id: string) => {
+  if (!confirm("Tem certeza que deseja excluir esta doação?")) return;
+
+  const atualizadas = minhasDoacoes.filter((d) => d.id !== id);
+  localStorage.setItem("doacoes", JSON.stringify(atualizadas));
+  setMinhasDoacoes(atualizadas);
+};
+
   const doacoesFiltradas = minhasDoacoes
     .filter((d) =>
       filtroStatus === "todas" ? true : d.status === filtroStatus
@@ -75,6 +83,12 @@ export default function MinhasDoacoes() {
 
               {d.status === "disponivel" && (
                 <button onClick={() => marcarComoEntregue(d.id)}>Marcar como entregue</button>
+              )}
+
+              {d.status === "disponivel" && (
+                <button onClick={() => excluirDoacao(d.id)} style={{ color: "red" }}>
+                  🗑 Excluir
+                </button>
               )}
             </li>
           ))
