@@ -10,6 +10,7 @@ import DoacoesRecebidas from "../pages/DoacoesRecebidas";
 import Perfil from "../pages/Perfil";
 import ChatDoacao from "../pages/ChatDoacao";
 import ChatsAtivos from "../pages/ChatsAtivos";
+import EditarDoacao from "../pages/EditarDoacao";
 
 export default function AppRoutes() {
   return (
@@ -26,6 +27,7 @@ export default function AppRoutes() {
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/chat/:id" element={<ChatDoacao />} />
         <Route path="/chats" element={<ChatsAtivos />} />
+        <Route path="/editar-doacao/:id" element={<EditarDoacao />} />
       </Routes>
     </BrowserRouter>
   );

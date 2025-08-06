@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { type Doacao, listarDoacoes, atualizarDoacao } from "../services/storage";
+import {
+  type Doacao,
+  listarDoacoes,
+  atualizarDoacao,
+} from "../services/storage";
 import { useNavigate } from "react-router-dom";
 
 export default function MinhasDoacoes() {
@@ -28,18 +32,16 @@ export default function MinhasDoacoes() {
 
     const atualizada = { ...doacao, status: "entregue" as const };
     atualizarDoacao(atualizada);
-    setMinhasDoacoes((prev) =>
-      prev.map((d) => (d.id === id ? atualizada : d))
-    );
+    setMinhasDoacoes((prev) => prev.map((d) => (d.id === id ? atualizada : d)));
   };
 
   const excluirDoacao = (id: string) => {
-  if (!confirm("Tem certeza que deseja excluir esta doação?")) return;
+    if (!confirm("Tem certeza que deseja excluir esta doação?")) return;
 
-  const atualizadas = minhasDoacoes.filter((d) => d.id !== id);
-  localStorage.setItem("doacoes", JSON.stringify(atualizadas));
-  setMinhasDoacoes(atualizadas);
-};
+    const atualizadas = minhasDoacoes.filter((d) => d.id !== id);
+    localStorage.setItem("doacoes", JSON.stringify(atualizadas));
+    setMinhasDoacoes(atualizadas);
+  };
 
   const doacoesFiltradas = minhasDoacoes
     .filter((d) =>
@@ -54,14 +56,20 @@ export default function MinhasDoacoes() {
       <h2>Minhas Doações</h2>
 
       <label>Status: </label>
-      <select value={filtroStatus} onChange={(e) => setFiltroStatus(e.target.value)}>
+      <select
+        value={filtroStatus}
+        onChange={(e) => setFiltroStatus(e.target.value)}
+      >
         <option value="todas">Todas</option>
         <option value="disponivel">Disponível</option>
         <option value="entregue">Entregue</option>
       </select>
 
       <label style={{ marginLeft: "1rem" }}>Categoria: </label>
-      <select value={filtroCategoria} onChange={(e) => setFiltroCategoria(e.target.value)}>
+      <select
+        value={filtroCategoria}
+        onChange={(e) => setFiltroCategoria(e.target.value)}
+      >
         <option value="todas">Todas</option>
         <option value="Alimentos">Alimentos</option>
         <option value="Roupas">Roupas</option>
@@ -74,21 +82,45 @@ export default function MinhasDoacoes() {
           <p>Nenhuma doação encontrada.</p>
         ) : (
           doacoesFiltradas.map((d) => (
-            <li key={d.id} style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem" }}>
+            <li
+              key={d.id}
+              style={{
+                border: "1px solid #ccc",
+                padding: "1rem",
+                marginBottom: "1rem",
+              }}
+            >
               {d.imagem && <img src={d.imagem} alt={d.nome} width={100} />}
               <h3>{d.nome}</h3>
-              <p><strong>Descrição:</strong> {d.descricao}</p>
-              <p><strong>Categoria:</strong> {d.categoria}</p>
-              <p><strong>Status:</strong> {d.status === "entregue" ? "✅ Entregue" : "📦 Disponível"}</p>
+              <p>
+                <strong>Descrição:</strong> {d.descricao}
+              </p>
+              <p>
+                <strong>Categoria:</strong> {d.categoria}
+              </p>
+              <p>
+                <strong>Status:</strong>{" "}
+                {d.status === "entregue" ? "✅ Entregue" : "📦 Disponível"}
+              </p>
 
               {d.status === "disponivel" && (
-                <button onClick={() => marcarComoEntregue(d.id)}>Marcar como entregue</button>
+                <button onClick={() => marcarComoEntregue(d.id)}>
+                  Marcar como entregue
+                </button>
               )}
 
               {d.status === "disponivel" && (
-                <button onClick={() => excluirDoacao(d.id)} style={{ color: "red" }}>
-                  🗑 Excluir
-                </button>
+                <>
+                  <button
+                    onClick={() => excluirDoacao(d.id)}
+                    style={{ color: "red", marginRight: "0.5rem" }}
+                  >
+                    🗑 Excluir
+                  </button>
+                  <button onClick={() => navigate(`/editar-doacao/${d.id}`)}>
+                    ✏️ Editar
+                  </button>
+                </>
               )}
             </li>
           ))
