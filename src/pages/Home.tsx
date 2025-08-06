@@ -48,14 +48,14 @@ export default function Home() {
               Ver Doações
             </Link>
             <Link to="/minhas-doacoes" style={estilos.botaoSecundario}>
-              Minhas Doações
+              Ver Minhas Doações
             </Link>
           </div>
         )}
       </section>
 
       <section style={estilos.secao}>
-        <h2>📦 Últimas Doações Públicas</h2>
+        <h2>📦 Últimas Doações disponíveis</h2>
         {ultimasDoacoes.length === 0 ? (
           <p>Nenhuma doação disponível no momento.</p>
         ) : (
@@ -79,11 +79,7 @@ export default function Home() {
 
       <section style={estilos.secao}>
         <h2>🎯 Como funciona?</h2>
-        <img
-          src={sharingArticles}
-          alt="Como funciona"
-          style={estilos.imagem}
-        />
+        <img src={sharingArticles} alt="Como funciona" style={estilos.imagem} />
         <ul>
           <li>✅ Cadastre-se gratuitamente</li>
           <li>📦 Doe itens que não usa mais</li>

@@ -45,15 +45,25 @@ export default function Perfil() {
     doc.text(`Doações recebidas: ${recebidas.length}`, 20, 64);
 
     doc.text("Últimas doações feitas:", 20, 76);
-    feitas.slice(-3).reverse().forEach((d, i) => {
-      doc.text(`• ${d.nome} — ${d.status}`, 24, 84 + i * 8);
-    });
+    feitas
+      .slice(-3)
+      .reverse()
+      .forEach((d, i) => {
+        doc.text(`• ${d.nome} — ${d.status}`, 24, 84 + i * 8);
+      });
 
     const offset = 84 + feitas.slice(-3).length * 8 + 8;
     doc.text("Últimas doações recebidas:", 20, offset);
-    recebidas.slice(-3).reverse().forEach((d, i) => {
-      doc.text(`• ${d.nome} — doador ID: ${d.userId}`, 24, offset + 8 + i * 8);
-    });
+    recebidas
+      .slice(-3)
+      .reverse()
+      .forEach((d, i) => {
+        doc.text(
+          `• ${d.nome} — doador ID: ${d.userId}`,
+          24,
+          offset + 8 + i * 8
+        );
+      });
 
     doc.save("relatorio-doacoes.pdf");
   };
@@ -61,32 +71,49 @@ export default function Perfil() {
   return (
     <div>
       <h2>Meu Perfil</h2>
-      <p><strong>Nome:</strong> {nome}</p>
-      <p><strong>Email:</strong> {email}</p>
-      <p><strong>WhatsApp:</strong> {whatsapp || "Não informado"}</p>
+      <p>
+        <strong>Nome:</strong> {nome}
+      </p>
+      <p>
+        <strong>Email:</strong> {email}
+      </p>
+      <p>
+        <strong>WhatsApp:</strong> {whatsapp || "Não informado"}
+      </p>
 
       <h3>📦 Relatório de Doações</h3>
-      <p>Total de doações feitas: <strong>{feitas.length}</strong></p>
-      <p>Total de doações recebidas: <strong>{recebidas.length}</strong></p>
+      <p>
+        Total de doações feitas: <strong>{feitas.length}</strong>
+      </p>
+      <p>
+        Total de doações recebidas: <strong>{recebidas.length}</strong>
+      </p>
 
       <button onClick={gerarPDF}>📄 Exportar relatório em PDF</button>
 
       <h4>Minhas últimas doações feitas:</h4>
       <ul>
-        {feitas.slice(-3).reverse().map((d) => (
-          <li key={d.id}>
-            {d.nome} — {d.status === "entregue" ? "✅ Entregue" : "📦 Disponível"}
-          </li>
-        ))}
+        {feitas
+          .slice(-3)
+          .reverse()
+          .map((d) => (
+            <li key={d.id}>
+              {d.nome} —{" "}
+              {d.status === "entregue" ? "✅ Entregue" : "📦 Disponível"}
+            </li>
+          ))}
       </ul>
 
       <h4>Últimas doações recebidas:</h4>
       <ul>
-        {recebidas.slice(-3).reverse().map((d) => (
-          <li key={d.id}>
-            {d.nome} — de usuário ID: {d.userId}
-          </li>
-        ))}
+        {recebidas
+          .slice(-3)
+          .reverse()
+          .map((d) => (
+            <li key={d.id}>
+              {d.nome} — de usuário ID: {d.userId}
+            </li>
+          ))}
       </ul>
     </div>
   );

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { type Doacao, listarDoacoes, atualizarDoacao } from "../services/storage";
+import {
+  type Doacao,
+  listarDoacoes,
+  atualizarDoacao,
+} from "../services/storage";
 
 export default function EditarDoacao() {
   const { id } = useParams();
@@ -58,7 +62,8 @@ export default function EditarDoacao() {
           handleSalvar();
         }}
       >
-        <label>Nome:</label><br />
+        <label>Nome:</label>
+        <br />
         <input
           type="text"
           value={nome}
@@ -67,7 +72,8 @@ export default function EditarDoacao() {
         />
         <br />
 
-        <label>Descrição:</label><br />
+        <label>Descrição:</label>
+        <br />
         <textarea
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
@@ -75,7 +81,8 @@ export default function EditarDoacao() {
         />
         <br />
 
-        <label>Categoria:</label><br />
+        <label>Categoria:</label>
+        <br />
         <select
           value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
@@ -88,14 +95,16 @@ export default function EditarDoacao() {
         </select>
         <br />
 
-        <label>Imagem (URL):</label><br />
+        <label>Imagem (URL):</label>
+        <br />
         <input
           type="text"
           value={imagem}
           onChange={(e) => setImagem(e.target.value)}
           placeholder="URL da imagem"
         />
-        <br /><br />
+        <br />
+        <br />
 
         <button type="submit">Salvar alterações</button>
       </form>

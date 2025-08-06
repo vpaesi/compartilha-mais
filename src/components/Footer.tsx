@@ -11,7 +11,7 @@ export default function Footer() {
             Doações
           </a>
           <a href="/minhas-doacoes" style={estilos.link}>
-            Minhas Doações
+            Ver Minhas Doações
           </a>
           <a href="/chats" style={estilos.link}>
             Chats

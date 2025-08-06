@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { type Doacao, listarDoacoes, buscarUsuarioPorId } from "../services/storage";
+import {
+  type Doacao,
+  listarDoacoes,
+  buscarUsuarioPorId,
+} from "../services/storage";
 import { useNavigate } from "react-router-dom";
 
 export default function ChatsAtivos() {
@@ -17,7 +21,6 @@ export default function ChatsAtivos() {
     const usuario = JSON.parse(userStr);
     const todas = listarDoacoes();
 
-    // Doações onde o usuário é doador ou receptor E tem mensagens
     const comChat = todas.filter(
       (d) =>
         (d.userId === usuario.id || d.recebidoPor === usuario.id) &&
@@ -37,16 +40,25 @@ export default function ChatsAtivos() {
       ) : (
         <ul>
           {doacoesComChat.map((d) => {
-            // Nome do outro usuário (doador ou receptor)
-            const usuarioIdLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null")?.id;
-            const outroUsuarioId = d.userId === usuarioIdLogado ? d.recebidoPor : d.userId;
+            const usuarioIdLogado = JSON.parse(
+              localStorage.getItem("usuarioLogado") || "null"
+            )?.id;
+            const outroUsuarioId =
+              d.userId === usuarioIdLogado ? d.recebidoPor : d.userId;
 
-            const outroUsuario = buscarUsuarioPorId(outroUsuarioId || "") || { nome: "Usuário desconhecido" };
+            const outroUsuario = buscarUsuarioPorId(outroUsuarioId || "") || {
+              nome: "Usuário desconhecido",
+            };
 
             return (
               <li
                 key={d.id}
-                style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem", cursor: "pointer" }}
+                style={{
+                  border: "1px solid #ccc",
+                  padding: "1rem",
+                  marginBottom: "1rem",
+                  cursor: "pointer",
+                }}
                 onClick={() => navigate(`/chat/${d.id}`)}
               >
                 <h3>{d.nome}</h3>

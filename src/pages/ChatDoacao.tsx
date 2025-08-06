@@ -23,7 +23,6 @@ export default function ChatDoacao() {
   );
 
   useEffect(() => {
-    // carregar doação
     const todas = listarDoacoes();
     const d = todas.find((d) => d.id === id);
     if (!d) {
@@ -33,7 +32,6 @@ export default function ChatDoacao() {
     }
     setDoacao(d);
 
-    // carregar usuários para cache
     const usuarios = listarUsuarios();
     const cache: Record<string, Usuario> = {};
     usuarios.forEach((u) => (cache[u.id] = u));

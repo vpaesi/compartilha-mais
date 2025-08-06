@@ -29,13 +29,28 @@ export default function DoacoesRecebidas() {
       ) : (
         <ul>
           {doacoesRecebidas.map((d) => (
-            <li key={d.id} style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem" }}>
+            <li
+              key={d.id}
+              style={{
+                border: "1px solid #ccc",
+                padding: "1rem",
+                marginBottom: "1rem",
+              }}
+            >
               {d.imagem && <img src={d.imagem} alt={d.nome} width={100} />}
               <h3>{d.nome}</h3>
-              <p><strong>Descrição:</strong> {d.descricao}</p>
-              <p><strong>Categoria:</strong> {d.categoria}</p>
-              <p><strong>Status:</strong> ✅ Recebida</p>
-              <p><strong>Doado por ID:</strong> {d.userId}</p>
+              <p>
+                <strong>Descrição:</strong> {d.descricao}
+              </p>
+              <p>
+                <strong>Categoria:</strong> {d.categoria}
+              </p>
+              <p>
+                <strong>Status:</strong> ✅ Recebida
+              </p>
+              <p>
+                <strong>Doado por ID:</strong> {d.userId}
+              </p>
             </li>
           ))}
         </ul>

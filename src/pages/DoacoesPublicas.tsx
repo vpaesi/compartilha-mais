@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { type Doacao, listarDoacoes, atualizarDoacao } from "../services/storage";
+import {
+  type Doacao,
+  listarDoacoes,
+  atualizarDoacao,
+} from "../services/storage";
 import { useNavigate } from "react-router-dom";
 
 export default function DoacoesPublicas() {
@@ -7,7 +11,9 @@ export default function DoacoesPublicas() {
   const [categoriaFiltro, setCategoriaFiltro] = useState("todas");
   const [busca, setBusca] = useState("");
   const navigate = useNavigate();
-  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+  const usuarioLogado = JSON.parse(
+    localStorage.getItem("usuarioLogado") || "null"
+  );
 
   useEffect(() => {
     const todas = listarDoacoes();
@@ -41,9 +47,7 @@ export default function DoacoesPublicas() {
     .filter((d) =>
       categoriaFiltro === "todas" ? true : d.categoria === categoriaFiltro
     )
-    .filter((d) =>
-      d.nome.toLowerCase().includes(busca.toLowerCase())
-    );
+    .filter((d) => d.nome.toLowerCase().includes(busca.toLowerCase()));
 
   return (
     <div>
@@ -59,7 +63,10 @@ export default function DoacoesPublicas() {
       <br />
 
       <label>📂 Filtrar por categoria: </label>
-      <select value={categoriaFiltro} onChange={(e) => setCategoriaFiltro(e.target.value)}>
+      <select
+        value={categoriaFiltro}
+        onChange={(e) => setCategoriaFiltro(e.target.value)}
+      >
         <option value="todas">Todas</option>
         <option value="Alimentos">Alimentos</option>
         <option value="Roupas">Roupas</option>
@@ -72,11 +79,22 @@ export default function DoacoesPublicas() {
           <p>Nenhuma doação encontrada.</p>
         ) : (
           doacoesFiltradas.map((d) => (
-            <li key={d.id} style={{ border: "1px solid #ccc", padding: "1rem", margin: "1rem 0" }}>
+            <li
+              key={d.id}
+              style={{
+                border: "1px solid #ccc",
+                padding: "1rem",
+                margin: "1rem 0",
+              }}
+            >
               {d.imagem && <img src={d.imagem} alt={d.nome} width={100} />}
               <h3>{d.nome}</h3>
-              <p><strong>Descrição:</strong> {d.descricao}</p>
-              <p><strong>Categoria:</strong> {d.categoria}</p>
+              <p>
+                <strong>Descrição:</strong> {d.descricao}
+              </p>
+              <p>
+                <strong>Categoria:</strong> {d.categoria}
+              </p>
               <button onClick={() => handleReceber(d.id)}>Quero receber</button>
             </li>
           ))

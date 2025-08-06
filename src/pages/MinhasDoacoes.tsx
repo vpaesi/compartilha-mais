@@ -53,7 +53,7 @@ export default function MinhasDoacoes() {
 
   return (
     <div>
-      <h2>Minhas Doações</h2>
+      <h2>Ver Minhas Doações</h2>
 
       <label>Status: </label>
       <select

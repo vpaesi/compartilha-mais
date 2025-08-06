@@ -22,10 +22,9 @@ export interface Doacao {
   criadoEm: string;
   imagem?: string;
   recebidoPor?: string;
-  mensagens?: Mensagem[]; // 👈 novo campo
+  mensagens?: Mensagem[]; 
 }
 
-// Funções para usuários
 export function listarUsuarios(): Usuario[] {
   const usuariosStr = localStorage.getItem("usuarios");
   if (!usuariosStr) return [];
@@ -47,7 +46,6 @@ export const buscarUsuarioPorEmailESenha = (email: string, senha: string): Usuar
   return usuarios.find(u => u.email === email && u.senha === senha) || null;
 };
 
-// Funções para doações
 export const salvarDoacao = (doacao: Doacao) => {
   const doacoes = JSON.parse(localStorage.getItem("doacoes") || "[]");
   doacoes.push(doacao);

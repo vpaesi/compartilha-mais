@@ -55,7 +55,7 @@ export default function NovaDoacao() {
 
   return (
     <div>
-      <h2>Nova Doação</h2>
+      <h2>Cadastrar Doação</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -72,7 +72,10 @@ export default function NovaDoacao() {
           required
         />
         <br />
-        <select value={categoria} onChange={(e) => setCategoria(e.target.value)}>
+        <select
+          value={categoria}
+          onChange={(e) => setCategoria(e.target.value)}
+        >
           <option value="Alimentos">Alimentos</option>
           <option value="Roupas">Roupas</option>
           <option value="Higiene">Higiene</option>
