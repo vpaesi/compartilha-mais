@@ -6,16 +6,23 @@ export interface Usuario {
   whatsapp?: string;
 }
 
+export interface Mensagem {
+  autorId: string;
+  texto: string;
+  data: string;
+}
+
 export interface Doacao {
   id: string;
   nome: string;
   descricao: string;
   categoria: string;
   status: "disponivel" | "entregue";
-  userId: string; // quem doou
+  userId: string;
   criadoEm: string;
   imagem?: string;
-  recebidoPor?: string; // quem recebeu
+  recebidoPor?: string;
+  mensagens?: Mensagem[]; // 👈 novo campo
 }
 
 // Funções para usuários

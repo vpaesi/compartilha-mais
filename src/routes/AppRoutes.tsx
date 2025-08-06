@@ -8,7 +8,7 @@ import MinhasDoacoes from "../pages/MinhasDoacoes";
 import DoacoesPublicas from "../pages/DoacoesPublicas";
 import DoacoesRecebidas from "../pages/DoacoesRecebidas";
 import Perfil from "../pages/Perfil";
-
+import ChatDoacao from "../pages/ChatDoacao";
 
 export default function AppRoutes() {
   return (
@@ -23,6 +23,7 @@ export default function AppRoutes() {
         <Route path="/publicas" element={<DoacoesPublicas />} />
         <Route path="/recebidas" element={<DoacoesRecebidas />} />
         <Route path="/perfil" element={<Perfil />} />
+        <Route path="/chat/:id" element={<ChatDoacao />} />
       </Routes>
     </BrowserRouter>
   );

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 export default function MinhasDoacoes() {
   const [minhasDoacoes, setMinhasDoacoes] = useState<Doacao[]>([]);
+  const [filtroStatus, setFiltroStatus] = useState("todas");
+  const [filtroCategoria, setFiltroCategoria] = useState("todas");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,21 +28,44 @@ export default function MinhasDoacoes() {
 
     const atualizada = { ...doacao, status: "entregue" as const };
     atualizarDoacao(atualizada);
-
     setMinhasDoacoes((prev) =>
       prev.map((d) => (d.id === id ? atualizada : d))
     );
   };
 
+  const doacoesFiltradas = minhasDoacoes
+    .filter((d) =>
+      filtroStatus === "todas" ? true : d.status === filtroStatus
+    )
+    .filter((d) =>
+      filtroCategoria === "todas" ? true : d.categoria === filtroCategoria
+    );
+
   return (
     <div>
       <h2>Minhas Doações</h2>
 
-      {minhasDoacoes.length === 0 ? (
-        <p>Você ainda não fez nenhuma doação.</p>
-      ) : (
-        <ul>
-          {minhasDoacoes.map((d) => (
+      <label>Status: </label>
+      <select value={filtroStatus} onChange={(e) => setFiltroStatus(e.target.value)}>
+        <option value="todas">Todas</option>
+        <option value="disponivel">Disponível</option>
+        <option value="entregue">Entregue</option>
+      </select>
+
+      <label style={{ marginLeft: "1rem" }}>Categoria: </label>
+      <select value={filtroCategoria} onChange={(e) => setFiltroCategoria(e.target.value)}>
+        <option value="todas">Todas</option>
+        <option value="Alimentos">Alimentos</option>
+        <option value="Roupas">Roupas</option>
+        <option value="Higiene">Higiene</option>
+        <option value="Outros">Outros</option>
+      </select>
+
+      <ul>
+        {doacoesFiltradas.length === 0 ? (
+          <p>Nenhuma doação encontrada.</p>
+        ) : (
+          doacoesFiltradas.map((d) => (
             <li key={d.id} style={{ border: "1px solid #ccc", padding: "1rem", marginBottom: "1rem" }}>
               {d.imagem && <img src={d.imagem} alt={d.nome} width={100} />}
               <h3>{d.nome}</h3>
@@ -52,9 +77,9 @@ export default function MinhasDoacoes() {
                 <button onClick={() => marcarComoEntregue(d.id)}>Marcar como entregue</button>
               )}
             </li>
-          ))}
-        </ul>
-      )}
+          ))
+        )}
+      </ul>
     </div>
   );
 }

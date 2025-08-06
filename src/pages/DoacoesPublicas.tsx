@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { type Doacao, listarDoacoes, atualizarDoacao } from "../services/storage";
+import { useNavigate } from "react-router-dom";
 
 export default function DoacoesPublicas() {
   const [doacoes, setDoacoes] = useState<Doacao[]>([]);
   const [categoriaFiltro, setCategoriaFiltro] = useState("todas");
+  const [busca, setBusca] = useState("");
   const navigate = useNavigate();
   const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
@@ -31,23 +32,33 @@ export default function DoacoesPublicas() {
     };
 
     atualizarDoacao(atualizada);
-
-    // Remover da lista exibida
     setDoacoes((prev) => prev.filter((d) => d.id !== id));
-
-    alert("Doação marcada como recebida! Em breve o doador entrará em contato.");
+    alert("Doação marcada como recebida!");
+    navigate(`/chat/${id}`);
   };
 
-  const doacoesFiltradas =
-    categoriaFiltro === "todas"
-      ? doacoes
-      : doacoes.filter((d) => d.categoria === categoriaFiltro);
+  const doacoesFiltradas = doacoes
+    .filter((d) =>
+      categoriaFiltro === "todas" ? true : d.categoria === categoriaFiltro
+    )
+    .filter((d) =>
+      d.nome.toLowerCase().includes(busca.toLowerCase())
+    );
 
   return (
     <div>
       <h2>Doações Disponíveis</h2>
 
-      <label>Filtrar por categoria: </label>
+      <label>🔍 Buscar por nome: </label>
+      <input
+        type="text"
+        placeholder="Ex: arroz"
+        value={busca}
+        onChange={(e) => setBusca(e.target.value)}
+      />
+      <br />
+
+      <label>📂 Filtrar por categoria: </label>
       <select value={categoriaFiltro} onChange={(e) => setCategoriaFiltro(e.target.value)}>
         <option value="todas">Todas</option>
         <option value="Alimentos">Alimentos</option>
@@ -58,7 +69,7 @@ export default function DoacoesPublicas() {
 
       <ul>
         {doacoesFiltradas.length === 0 ? (
-          <p>Nenhuma doação disponível nesta categoria.</p>
+          <p>Nenhuma doação encontrada.</p>
         ) : (
           doacoesFiltradas.map((d) => (
             <li key={d.id} style={{ border: "1px solid #ccc", padding: "1rem", margin: "1rem 0" }}>
