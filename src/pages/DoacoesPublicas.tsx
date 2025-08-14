@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+
 import {
   type Doacao,
   listarDoacoes,
   atualizarDoacao,
 } from "../services/storage";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function DoacoesPublicas() {
   const [doacoes, setDoacoes] = useState<Doacao[]>([]);
@@ -50,52 +51,57 @@ export default function DoacoesPublicas() {
     .filter((d) => d.nome.toLowerCase().includes(busca.toLowerCase()));
 
   return (
-    <div>
-      <h2>Doações Disponíveis</h2>
+    <div className="max-w-3xl mx-auto mt-10 p-4">
+      <h2 className="text-2xl font-bold mb-6 text-blue-700">Doações Disponíveis</h2>
 
-      <label>🔍 Buscar por nome: </label>
-      <input
-        type="text"
-        placeholder="Ex: arroz"
-        value={busca}
-        onChange={(e) => setBusca(e.target.value)}
-      />
-      <br />
+      <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="flex-1">
+          <label className="block mb-1 font-medium">🔍 Buscar por nome:</label>
+          <input
+            type="text"
+            placeholder="Ex: arroz"
+            value={busca}
+            onChange={(e) => setBusca(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+        <div className="flex-1">
+          <label className="block mb-1 font-medium">📂 Filtrar por categoria:</label>
+          <select
+            value={categoriaFiltro}
+            onChange={(e) => setCategoriaFiltro(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="todas">Todas</option>
+            <option value="Alimentos">Alimentos</option>
+            <option value="Roupas">Roupas</option>
+            <option value="Higiene">Higiene</option>
+            <option value="Outros">Outros</option>
+          </select>
+        </div>
+      </div>
 
-      <label>📂 Filtrar por categoria: </label>
-      <select
-        value={categoriaFiltro}
-        onChange={(e) => setCategoriaFiltro(e.target.value)}
-      >
-        <option value="todas">Todas</option>
-        <option value="Alimentos">Alimentos</option>
-        <option value="Roupas">Roupas</option>
-        <option value="Higiene">Higiene</option>
-        <option value="Outros">Outros</option>
-      </select>
-
-      <ul>
+      <ul className="space-y-6">
         {doacoesFiltradas.length === 0 ? (
-          <p>Nenhuma doação encontrada.</p>
+          <li className="text-gray-500 list-none">Nenhuma doação encontrada.</li>
         ) : (
           doacoesFiltradas.map((d) => (
             <li
               key={d.id}
-              style={{
-                border: "1px solid #ccc",
-                padding: "1rem",
-                margin: "1rem 0",
-              }}
+              className="bg-white border border-gray-200 rounded-lg shadow p-6 flex flex-col md:flex-row gap-6 items-center"
             >
-              {d.imagem && <img src={d.imagem} alt={d.nome} width={100} />}
-              <h3>{d.nome}</h3>
-              <p>
-                <strong>Descrição:</strong> {d.descricao}
-              </p>
-              <p>
-                <strong>Categoria:</strong> {d.categoria}
-              </p>
-              <button onClick={() => handleReceber(d.id)}>Quero receber</button>
+              {d.imagem && <img src={d.imagem} alt={d.nome} className="w-28 h-28 object-cover rounded border" />}
+              <div className="flex-1 w-full">
+                <h3 className="text-lg font-semibold text-blue-700 mb-1">{d.nome}</h3>
+                <p className="mb-1"><span className="font-medium">Descrição:</span> {d.descricao}</p>
+                <p className="mb-2"><span className="font-medium">Categoria:</span> {d.categoria}</p>
+                <button
+                  onClick={() => handleReceber(d.id)}
+                  className="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded transition-colors shadow"
+                >
+                  Quero receber
+                </button>
+              </div>
             </li>
           ))
         )}

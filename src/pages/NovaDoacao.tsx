@@ -54,39 +54,42 @@ export default function NovaDoacao() {
   };
 
   return (
-    <div>
-      <h2>Cadastrar Doação</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="max-w-lg mx-auto mt-16 bg-white rounded-lg shadow-lg p-8 border border-gray-200">
+      <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">Cadastrar Doação</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
           placeholder="Nome do item"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
           required
+          className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
-        <br />
         <textarea
           placeholder="Descrição"
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
           required
+          className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 min-h-[80px]"
         />
-        <br />
         <select
           value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           <option value="Alimentos">Alimentos</option>
           <option value="Roupas">Roupas</option>
           <option value="Higiene">Higiene</option>
           <option value="Outros">Outros</option>
         </select>
-        <br />
-        <input type="file" accept="image/*" onChange={handleImagem} />
-        <br />
-        {imagem && <img src={imagem} alt="Prévia" width={120} />}
-        <br />
-        <button type="submit">Cadastrar Doação</button>
+        <input type="file" accept="image/*" onChange={handleImagem} className="block" />
+        {imagem && <img src={imagem} alt="Prévia" className="w-32 rounded border mx-auto" />}
+        <button
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition-colors mt-2 shadow"
+        >
+          Cadastrar Doação
+        </button>
       </form>
     </div>
   );

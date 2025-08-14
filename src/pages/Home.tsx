@@ -22,65 +22,92 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={estilos.container}>
-      <section style={estilos.hero}>
+    <div className="max-w-2xl md:max-w-3xl mx-auto p-6 font-sans">
+      <section className="text-center mb-12 bg-gray-100 p-8 rounded-xl">
         <img
           src={helpingEachOther}
           alt="Compartilhando"
-          style={estilos.imagemTopo}
+          className="max-w-[160px] w-full h-auto mx-auto mb-4"
         />
-        <h1 style={estilos.titulo}>🌟 Compartilha+</h1>
-        <p style={estilos.subtitulo}>
+        <h1 className="text-4xl font-bold mb-2 text-gray-800 flex items-center justify-center gap-2">
+          <span>🌟</span> Compartilha+
+        </h1>
+        <p className="text-lg text-gray-600 mb-4">
           Conectando pessoas para compartilhar o que realmente importa.
         </p>
         {!usuarioLogado ? (
-          <div style={estilos.acoes}>
-            <Link to="/login" style={estilos.botao}>
+          <div className="mt-6 flex justify-center gap-4 flex-wrap">
+            <Link
+              to="/login"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow transition-colors"
+            >
               Entrar
             </Link>
-            <Link to="/cadastro" style={estilos.botaoSecundario}>
+            <Link
+              to="/cadastro"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg shadow transition-colors"
+            >
               Criar conta
             </Link>
           </div>
         ) : (
-          <div style={estilos.acoes}>
-            <Link to="/publicas" style={estilos.botao}>
+          <div className="mt-6 flex justify-center gap-4 flex-wrap">
+            <Link
+              to="/publicas"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow transition-colors"
+            >
               Ver Doações
             </Link>
-            <Link to="/minhas-doacoes" style={estilos.botaoSecundario}>
+            <Link
+              to="/minhas-doacoes"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-6 rounded-lg shadow transition-colors"
+            >
               Ver Minhas Doações
             </Link>
           </div>
         )}
       </section>
 
-      <section style={estilos.secao}>
-        <h2>📦 Últimas Doações disponíveis</h2>
+      <section className="mb-12">
+        <h2 className="text-xl font-semibold mb-4">📦 Últimas Doações disponíveis</h2>
         {ultimasDoacoes.length === 0 ? (
-          <p>Nenhuma doação disponível no momento.</p>
+          <p className="text-gray-500">Nenhuma doação disponível no momento.</p>
         ) : (
-          <ul style={estilos.listaDoacoes}>
+          <ul className="list-none p-0 mb-4">
             {ultimasDoacoes.map((d) => (
-              <li key={d.id} style={estilos.cardDoacao}>
+              <li
+                key={d.id}
+                className="flex gap-4 p-4 border border-gray-200 rounded-lg mb-3 items-center bg-white shadow-sm"
+              >
                 {d.imagem && (
-                  <img src={d.imagem} alt={d.nome} style={estilos.imgDoacao} />
+                  <img
+                    src={d.imagem}
+                    alt={d.nome}
+                    className="w-20 h-20 object-cover rounded-lg max-w-[80px] max-h-[80px]"
+                  />
                 )}
                 <div>
-                  <h4>{d.nome}</h4>
-                  <p>{d.descricao}</p>
-                  <small>Categoria: {d.categoria}</small>
+                  <h4 className="font-bold text-lg text-gray-800">{d.nome}</h4>
+                  <p className="text-gray-600 mb-1">{d.descricao}</p>
+                  <small className="text-gray-400">Categoria: {d.categoria}</small>
                 </div>
               </li>
             ))}
           </ul>
         )}
-        <Link to="/doacoes">Ver todas as doações →</Link>
+        <Link to="/doacoes" className="text-blue-600 hover:underline font-medium">
+          Ver todas as doações →
+        </Link>
       </section>
 
-      <section style={estilos.secao}>
-        <h2>🎯 Como funciona?</h2>
-        <img src={sharingArticles} alt="Como funciona" style={estilos.imagem} />
-        <ul>
+      <section className="mb-12">
+        <h2 className="text-xl font-semibold mb-4">🎯 Como funciona?</h2>
+        <img
+          src={sharingArticles}
+          alt="Como funciona"
+          className="w-full max-w-[300px] h-auto mx-auto mb-4"
+        />
+        <ul className="list-disc list-inside text-left max-w-md mx-auto text-gray-700 space-y-1">
           <li>✅ Cadastre-se gratuitamente</li>
           <li>📦 Doe itens que não usa mais</li>
           <li>🙋‍♀️ Solicite itens disponíveis</li>
@@ -89,96 +116,9 @@ export default function Home() {
         </ul>
       </section>
 
-      <footer style={estilos.rodape}>
+      <footer className="mt-12 text-center text-sm text-gray-400">
         <p>🌍 Projeto de Extensão | ADS - 2025</p>
       </footer>
     </div>
   );
 }
-
-const estilos = {
-  container: {
-    maxWidth: "850px",
-    margin: "0 auto",
-    padding: "2rem",
-    fontFamily: "sans-serif",
-  },
-  hero: {
-    textAlign: "center" as const,
-    marginBottom: "3rem",
-    backgroundColor: "#f3f4f6",
-    padding: "2rem",
-    borderRadius: "10px",
-  },
-  titulo: {
-    fontSize: "2.5rem",
-    marginBottom: "0.5rem",
-    color: "#2d3748",
-  },
-  subtitulo: {
-    fontSize: "1.2rem",
-    color: "#4a5568",
-  },
-  imagemTopo: {
-    width: "160px",
-    marginBottom: "1rem",
-  },
-  imagem: {
-    width: "100%",
-    maxWidth: "300px",
-    margin: "1rem auto",
-    display: "block",
-  },
-  acoes: {
-    marginTop: "1.5rem",
-    display: "flex",
-    justifyContent: "center",
-    gap: "1rem",
-    flexWrap: "wrap" as const,
-  },
-  botao: {
-    backgroundColor: "#2563eb",
-    color: "#fff",
-    padding: "0.75rem 1.5rem",
-    borderRadius: "8px",
-    textDecoration: "none",
-    fontWeight: "bold",
-  },
-  botaoSecundario: {
-    backgroundColor: "#e2e8f0",
-    color: "#2d3748",
-    padding: "0.75rem 1.5rem",
-    borderRadius: "8px",
-    textDecoration: "none",
-    fontWeight: "bold",
-  },
-  secao: {
-    marginBottom: "3rem",
-  },
-  rodape: {
-    marginTop: "3rem",
-    textAlign: "center" as const,
-    fontSize: "0.9rem",
-    color: "#718096",
-  },
-  listaDoacoes: {
-    listStyle: "none",
-    padding: 0,
-    marginBottom: "1rem",
-  },
-  cardDoacao: {
-    display: "flex",
-    gap: "1rem",
-    padding: "1rem",
-    border: "1px solid #ccc",
-    borderRadius: "10px",
-    marginBottom: "1rem",
-    alignItems: "center",
-  },
-  imgDoacao: {
-    width: "80px",
-    height: "80px",
-    objectFit: "cover" as const,
-    borderRadius: "8px",
-  },
-};
