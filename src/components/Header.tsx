@@ -18,7 +18,7 @@ export default function Header() {
   const isCadastro = location.pathname === "/cadastro";
 
   return (
-    <header className="bg-gray-100 py-4 px-4 mb-8 shadow-sm">
+    <header className="bg-gray-100 py-4 px-12 mb-8 shadow-sm">
       <nav className="flex gap-4 items-center">
         {(!usuario && isHome) ? (
           <>
