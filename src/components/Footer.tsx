@@ -1,21 +1,28 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
   return (
     <footer style={estilos.footer}>
       <div style={estilos.linhaSuperior}>
         <h3 style={estilos.logo}>Compartilha+</h3>
         <div style={estilos.links}>
-          <a href="#" style={estilos.link}>
+          <Link to="/" style={estilos.link}>
             Início
-          </a>
-          <a href="/doacoes" style={estilos.link}>
+          </Link>
+          <Link to="/publicas" style={estilos.link}>
             Doações
-          </a>
-          <a href="/minhas-doacoes" style={estilos.link}>
-            Ver Minhas Doações
-          </a>
-          <a href="/chats" style={estilos.link}>
-            Chats
-          </a>
+          </Link>
+          {usuario && (
+            <>
+              <Link to="/minhas-doacoes" style={estilos.link}>
+                Ver Minhas Doações
+              </Link>
+              <Link to="/chats" style={estilos.link}>
+                Chats
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
