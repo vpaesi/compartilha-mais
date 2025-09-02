@@ -8,9 +8,11 @@ export default function Cadastro() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [erroWhatsapp, setErroWhatsapp] = useState("");
   const [erroNome, setErroNome] = useState("");
+  const [erroSenha, setErroSenha] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -28,6 +30,13 @@ export default function Cadastro() {
       return;
     } else {
       setErroWhatsapp("");
+    }
+
+    if (senha !== confirmarSenha) {
+      setErroSenha("As senhas não conferem.");
+      return;
+    } else {
+      setErroSenha("");
     }
 
     const novoUsuario: Usuario = {
@@ -85,6 +94,17 @@ export default function Cadastro() {
           required
           className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
+        <input
+          type="password"
+          placeholder="Confirmar Senha"
+          value={confirmarSenha}
+          onChange={(e) => setConfirmarSenha(e.target.value)}
+          required
+          className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        {erroSenha && (
+          <span className="text-red-500 text-sm">{erroSenha}</span>
+        )}
         <button
           type="submit"
           className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition-colors mt-2 shadow"
