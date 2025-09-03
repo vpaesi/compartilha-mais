@@ -4,6 +4,9 @@ import {
   listarDoacoes,
   atualizarDoacao,
 } from "../services/storage";
+import ItemCard from "../components/ItemCard";
+import VerItemButton from "../components/VerItemButton";
+import QueroReceberButton from "../components/QueroReceberButton";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -52,7 +55,7 @@ export default function DoacoesPublicas() {
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-4">
-      <h2 className="text-2xl font-bold mb-6 text-blue-700">Doações Disponíveis</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">Doações Disponíveis</h2>
 
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="flex-1">
@@ -88,20 +91,23 @@ export default function DoacoesPublicas() {
           doacoesFiltradas.map((d) => (
             <li
               key={d.id}
-              className="bg-white border border-gray-200 rounded-lg shadow p-6 flex flex-col md:flex-row gap-6 items-center"
+              className="bg-white border border-gray-200 rounded-lg shadow p-0 flex flex-col md:flex-row gap-6 items-center hover:bg-blue-50 transition"
             >
-              {d.imagem && <img src={d.imagem} alt={d.nome} className="w-28 h-28 object-cover rounded border" />}
-              <div className="flex-1 w-full">
-                <h3 className="text-lg font-semibold text-blue-700 mb-1">{d.nome}</h3>
-                <p className="mb-1"><span className="font-medium">Descrição:</span> {d.descricao}</p>
-                <p className="mb-2"><span className="font-medium">Categoria:</span> {d.categoria}</p>
-                <button
-                  onClick={() => handleReceber(d.id)}
-                  className="bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2 rounded transition-colors shadow"
-                >
-                  Quero receber
-                </button>
-              </div>
+              <ItemCard
+                id={d.id}
+                nome={d.nome}
+                descricao={d.descricao}
+                categoria={d.categoria}
+                imagem={d.imagem}
+                verItemButton={<VerItemButton id={d.id} />}
+                queroReceberButton={
+                  <QueroReceberButton
+                    onClick={() => handleReceber(d.id)}
+                    disabled={d.status === "entregue" || d.userId === usuarioLogado?.id}
+                  />
+                }
+                className="flex-1 w-full p-6 gap-6 items-center"
+              />
             </li>
           ))
         )}

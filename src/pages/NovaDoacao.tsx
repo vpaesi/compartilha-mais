@@ -55,7 +55,7 @@ export default function NovaDoacao() {
 
   return (
     <div className="max-w-lg mx-auto mt-16 bg-white rounded-lg shadow-lg p-8 border border-gray-200">
-      <h2 className="text-2xl font-bold mb-6 text-center text-blue-700">Cadastrar Doação</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">Cadastrar Doação</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"

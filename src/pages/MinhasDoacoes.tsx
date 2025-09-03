@@ -27,6 +27,7 @@ export default function MinhasDoacoes() {
   }, [navigate]);
 
   const marcarComoEntregue = (id: string) => {
+    if (!confirm("Tem certeza que deseja marcar esta doação como entregue?")) return;
     const doacao = minhasDoacoes.find((d) => d.id === id);
     if (!doacao) return;
 
@@ -52,23 +53,26 @@ export default function MinhasDoacoes() {
     );
 
   return (
-    <div>
-      <h2>Ver Minhas Doações</h2>
+    <div className="max-w-2xl mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-6 text-center">Ver Minhas Doações</h2>
 
-      <label>Status: </label>
+      <div className="flex flex-wrap items-center gap-4 mb-6">
+      <label className="font-medium">Status:</label>
       <select
         value={filtroStatus}
         onChange={(e) => setFiltroStatus(e.target.value)}
+        className="border rounded px-2 py-1"
       >
         <option value="todas">Todas</option>
         <option value="disponivel">Disponível</option>
         <option value="entregue">Entregue</option>
       </select>
 
-      <label style={{ marginLeft: "1rem" }}>Categoria: </label>
+      <label className="font-medium ml-4">Categoria:</label>
       <select
         value={filtroCategoria}
         onChange={(e) => setFiltroCategoria(e.target.value)}
+        className="border rounded px-2 py-1"
       >
         <option value="todas">Todas</option>
         <option value="Alimentos">Alimentos</option>
@@ -76,55 +80,78 @@ export default function MinhasDoacoes() {
         <option value="Higiene">Higiene</option>
         <option value="Outros">Outros</option>
       </select>
+      </div>
 
       <ul>
-        {doacoesFiltradas.length === 0 ? (
-          <p>Nenhuma doação encontrada.</p>
-        ) : (
-          doacoesFiltradas.map((d) => (
-            <li
-              key={d.id}
-              style={{
-                border: "1px solid #ccc",
-                padding: "1rem",
-                marginBottom: "1rem",
-              }}
-            >
-              {d.imagem && <img src={d.imagem} alt={d.nome} width={100} />}
-              <h3>{d.nome}</h3>
+      {doacoesFiltradas.length === 0 ? (
+        <p className="text-center text-gray-500">Nenhuma doação encontrada.</p>
+      ) : (
+        doacoesFiltradas.map((d) => (
+        <li
+          key={d.id}
+          className="border rounded-lg shadow-sm p-0 mb-4 hover:bg-blue-50 transition-transform duration-200 hover:scale-105"
+        >
+          <button
+            onClick={() => navigate(`/item-cadastrado/${d.id}`)}
+            className="w-full flex flex-col md:flex-row gap-4 items-start text-left p-4 bg-transparent border-0 focus:outline-none"
+            tabIndex={0}
+            aria-label={`Ver detalhes do item ${d.nome}`}
+          >
+            {d.imagem && (
+              <img
+                src={d.imagem}
+                alt={d.nome}
+                width={100}
+                className="rounded object-cover w-24 h-24"
+              />
+            )}
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold">{d.nome}</h3>
               <p>
-                <strong>Descrição:</strong> {d.descricao}
+                <span className="font-medium">Descrição:</span> {d.descricao}
               </p>
               <p>
-                <strong>Categoria:</strong> {d.categoria}
+                <span className="font-medium">Categoria:</span> {d.categoria}
               </p>
               <p>
-                <strong>Status:</strong>{" "}
-                {d.status === "entregue" ? "✅ Entregue" : "📦 Disponível"}
+                <span className="font-medium">Status:</span>{" "}
+                {d.status === "entregue" ? (
+                  <span className="text-green-600 font-semibold">✅ Entregue</span>
+                ) : (
+                  <span className="text-blue-600 font-semibold">📦 Disponível</span>
+                )}
               </p>
-
-              {d.status === "disponivel" && (
-                <button onClick={() => marcarComoEntregue(d.id)}>
-                  Marcar como entregue
+            </div>
+          </button>
+          <div className="mb-4 ml-4 px-4 pb-4 md:pb-0 md:px-0 flex gap-2 flex-wrap">
+            {d.status === "disponivel" && (
+              <button
+                onClick={() => marcarComoEntregue(d.id)}
+                className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded transition"
+              >
+                Marcar como entregue
+              </button>
+            )}
+            {d.status === "disponivel" && (
+              <>
+                <button
+                  onClick={() => excluirDoacao(d.id)}
+                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded transition"
+                >
+                  🗑 Excluir
                 </button>
-              )}
-
-              {d.status === "disponivel" && (
-                <>
-                  <button
-                    onClick={() => excluirDoacao(d.id)}
-                    style={{ color: "red", marginRight: "0.5rem" }}
-                  >
-                    🗑 Excluir
-                  </button>
-                  <button onClick={() => navigate(`/editar-doacao/${d.id}`)}>
-                    ✏️ Editar
-                  </button>
-                </>
-              )}
-            </li>
-          ))
-        )}
+                <button
+                  onClick={() => navigate(`/editar-doacao/${d.id}`)}
+                  className="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded transition"
+                >
+                  ✏️ Editar
+                </button>
+              </>
+            )}
+          </div>
+        </li>
+        ))
+      )}
       </ul>
     </div>
   );

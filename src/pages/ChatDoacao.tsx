@@ -59,35 +59,83 @@ export default function ChatDoacao() {
 
   if (!doacao) return null;
 
+  // Descobrir com quem está conversando
+  let outroUsuario: Usuario | undefined;
+  if (usuarioLogado && doacao) {
+    if (doacao.userId === usuarioLogado.id) {
+      outroUsuario = usuariosCache[doacao.recebidoPor || ""];
+    } else {
+      outroUsuario = usuariosCache[doacao.userId];
+    }
+  }
+
   return (
-    <div>
-      <h2>Chat da Doação: {doacao.nome}</h2>
+    <div className="max-w-xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+      <div className="flex items-center gap-4 mb-4">
+        {doacao.imagem && (
+          <img
+            src={doacao.imagem}
+            alt={doacao.nome}
+            width={64}
+            height={64}
+            className="rounded object-cover w-16 h-16"
+          />
+        )}
+        <h2 className="text-2xl font-bold text-gray-800">
+          Chat da Doação: {doacao.nome}
+        </h2>
+      </div>
 
-      <ul>
-        {(doacao.mensagens || []).map((msg, index) => {
-          const autor = usuariosCache[msg.autorId];
-          const nomeAutor = autor ? autor.nome : "Usuário desconhecido";
+      <p className="mb-6 text-gray-700">
+        Você está conversando com <strong>{outroUsuario?.nome || "Usuário desconhecido"}</strong> sobre a doação do item <strong>{doacao.nome}</strong>.
+      </p>
 
-          return (
-            <li key={index}>
-              <strong>
-                {msg.autorId === usuarioLogado.id ? "Você" : nomeAutor}:
-              </strong>{" "}
-              {msg.texto}
-              <br />
-              <small>{msg.data}</small>
-            </li>
-          );
-        })}
+      <ul className="space-y-4 mb-6 max-h-80 overflow-y-auto">
+      {(doacao.mensagens || []).map((msg, index) => {
+        const autor = usuariosCache[msg.autorId];
+        const nomeAutor = autor ? autor.nome : "Usuário desconhecido";
+
+        const isOwn = msg.autorId === usuarioLogado.id;
+
+        return (
+        <li
+          key={index}
+          className={`flex flex-col ${
+          isOwn ? "items-end" : "items-start"
+          }`}
+        >
+          <div
+          className={`px-4 py-2 rounded-lg max-w-xs break-words ${
+            isOwn
+            ? "bg-blue-100 text-blue-900"
+            : "bg-gray-100 text-gray-800"
+          }`}
+          >
+          <strong>
+            {isOwn ? "Você" : nomeAutor}:
+          </strong>{" "}
+          {msg.texto}
+          </div>
+          <small className="text-xs text-gray-500 mt-1">
+          {msg.data}
+          </small>
+        </li>
+        );
+      })}
       </ul>
 
       <textarea
-        value={mensagem}
-        onChange={(e) => setMensagem(e.target.value)}
-        placeholder="Digite uma mensagem..."
+      value={mensagem}
+      onChange={(e) => setMensagem(e.target.value)}
+      placeholder="Digite uma mensagem..."
+      className="w-full h-24 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none mb-2"
       />
-      <br />
-      <button onClick={enviarMensagem}>Enviar</button>
+      <button
+      onClick={enviarMensagem}
+      className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
+      >
+      Enviar
+      </button>
     </div>
   );
 }
