@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { salvarUsuario, type Usuario } from "../services/storage";
 import { validarNome, validarWhatsapp, aplicarMascaraWhatsapp } from "../services/validations";
 import { v4 as uuidv4 } from "uuid";
@@ -112,6 +112,11 @@ export default function Cadastro() {
           Cadastrar
         </button>
       </form>
+      <hr className="my-6 border-t" />
+      <p className="mt-6 text-center text-gray-700 text-sm">
+        Já possui cadastro?{' '}
+        <Link to="/login" className="text-blue-600 hover:underline font-medium">Clique aqui</Link>
+      </p>
     </div>
   );
 }

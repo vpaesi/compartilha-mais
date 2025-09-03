@@ -12,6 +12,7 @@ import ChatDoacao from "../pages/ChatDoacao";
 import ChatsAtivos from "../pages/ChatsAtivos";
 import EditarDoacao from "../pages/EditarDoacao";
 import Footer from "../components/Footer";
+import ItemCadastrado from "../pages/ItemCadastrado";
 
 export default function AppRoutes() {
   return (
@@ -29,6 +30,7 @@ export default function AppRoutes() {
         <Route path="/chat/:id" element={<ChatDoacao />} />
         <Route path="/chats" element={<ChatsAtivos />} />
         <Route path="/editar-doacao/:id" element={<EditarDoacao />} />
+  <Route path="/item-cadastrado/:id" element={<ItemCadastrado />} />
       </Routes>
       <Footer />
     </BrowserRouter>

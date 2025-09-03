@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { buscarUsuarioPorEmailESenha } from "../services/storage";
 
 export default function Login() {
@@ -48,6 +48,11 @@ export default function Login() {
           Entrar
         </button>
       </form>
+      <hr className="my-6 border-t" />
+      <p className="mt-6 text-center text-gray-700 text-sm">
+        Ainda não possui cadastro?{' '}
+        <Link to="/cadastro" className="text-blue-600 hover:underline font-medium">Clique aqui</Link>
+      </p>
     </div>
   );
 }
