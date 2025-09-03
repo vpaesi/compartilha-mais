@@ -69,51 +69,60 @@ export default function Perfil() {
   };
 
   return (
-    <div>
-      <h2>Meu Perfil</h2>
-      <p>
-        <strong>Nome:</strong> {nome}
+    <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-gray-800">Meu Perfil</h2>
+      <p className="mb-2">
+      <strong className="text-gray-700">Nome:</strong> {nome}
       </p>
-      <p>
-        <strong>Email:</strong> {email}
+      <p className="mb-2">
+      <strong className="text-gray-700">Email:</strong> {email}
       </p>
-      <p>
-        <strong>WhatsApp:</strong> {whatsapp || "Não informado"}
-      </p>
-
-      <h3>📦 Relatório de Doações</h3>
-      <p>
-        Total de doações feitas: <strong>{feitas.length}</strong>
-      </p>
-      <p>
-        Total de doações recebidas: <strong>{recebidas.length}</strong>
+      <p className="mb-6">
+      <strong className="text-gray-700">WhatsApp:</strong> {whatsapp || "Não informado"}
       </p>
 
-      <button onClick={gerarPDF}>📄 Exportar relatório em PDF</button>
+      <h3 className="text-xl font-semibold mb-2 text-blue-700">📦 Relatório de Doações</h3>
+      <p>
+      Total de doações feitas: <strong className="text-green-700">{feitas.length}</strong>
+      </p>
+      <p className="mb-4">
+      Total de doações recebidas: <strong className="text-green-700">{recebidas.length}</strong>
+      </p>
 
-      <h4>Minhas últimas doações feitas:</h4>
-      <ul>
-        {feitas
-          .slice(-3)
-          .reverse()
-          .map((d) => (
-            <li key={d.id}>
-              {d.nome} —{" "}
-              {d.status === "entregue" ? "✅ Entregue" : "📦 Disponível"}
-            </li>
-          ))}
+      <button
+      onClick={gerarPDF}
+      className="mb-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+      >
+      📄 Exportar relatório em PDF
+      </button>
+
+      <h4 className="text-lg font-medium mt-4 mb-2 text-gray-800">Minhas últimas doações feitas:</h4>
+      <ul className="list-disc list-inside mb-6">
+      {feitas
+        .slice(-3)
+        .reverse()
+        .map((d) => (
+        <li key={d.id} className="mb-1">
+          {d.nome} —{" "}
+          {d.status === "entregue" ? (
+          <span className="text-green-600 font-semibold">✅ Entregue</span>
+          ) : (
+          <span className="text-yellow-600 font-semibold">📦 Disponível</span>
+          )}
+        </li>
+        ))}
       </ul>
 
-      <h4>Últimas doações recebidas:</h4>
-      <ul>
-        {recebidas
-          .slice(-3)
-          .reverse()
-          .map((d) => (
-            <li key={d.id}>
-              {d.nome} — de usuário ID: {d.userId}
-            </li>
-          ))}
+      <h4 className="text-lg font-medium mb-2 text-gray-800">Últimas doações recebidas:</h4>
+      <ul className="list-disc list-inside">
+      {recebidas
+        .slice(-3)
+        .reverse()
+        .map((d) => (
+        <li key={d.id} className="mb-1">
+          {d.nome} — <span className="text-blue-700">de usuário ID: {d.userId}</span>
+        </li>
+        ))}
       </ul>
     </div>
   );

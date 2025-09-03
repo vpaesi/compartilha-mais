@@ -54,59 +54,69 @@ export default function EditarDoacao() {
   };
 
   return (
-    <div>
-      <h2>Editar Doação</h2>
+    <div className="max-w-lg mx-auto mt-10 bg-white shadow-md rounded-lg p-8">
+      <h2 className="text-2xl font-bold mb-6 text-center">Editar Doação</h2>
       <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSalvar();
-        }}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSalvar();
+      }}
+      className="space-y-5"
       >
-        <label>Nome:</label>
-        <br />
+      <div>
+        <label className="block text-sm font-medium mb-1">Nome:</label>
         <input
-          type="text"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          required
+        type="text"
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}
+        required
+        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
-        <br />
+      </div>
 
-        <label>Descrição:</label>
-        <br />
+      <div>
+        <label className="block text-sm font-medium mb-1">Descrição:</label>
         <textarea
-          value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
-          required
+        value={descricao}
+        onChange={(e) => setDescricao(e.target.value)}
+        required
+        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+        rows={4}
         />
-        <br />
+      </div>
 
-        <label>Categoria:</label>
-        <br />
+      <div>
+        <label className="block text-sm font-medium mb-1">Categoria:</label>
         <select
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-          required
+        value={categoria}
+        onChange={(e) => setCategoria(e.target.value)}
+        required
+        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          <option value="Alimentos">Alimentos</option>
-          <option value="Roupas">Roupas</option>
-          <option value="Higiene">Higiene</option>
-          <option value="Outros">Outros</option>
+        <option value="Alimentos">Alimentos</option>
+        <option value="Roupas">Roupas</option>
+        <option value="Higiene">Higiene</option>
+        <option value="Outros">Outros</option>
         </select>
-        <br />
+      </div>
 
-        <label>Imagem (URL):</label>
-        <br />
+      <div>
+        <label className="block text-sm font-medium mb-1">Imagem (URL):</label>
         <input
-          type="text"
-          value={imagem}
-          onChange={(e) => setImagem(e.target.value)}
-          placeholder="URL da imagem"
+        type="text"
+        value={imagem}
+        onChange={(e) => setImagem(e.target.value)}
+        placeholder="URL da imagem"
+        className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
-        <br />
-        <br />
+      </div>
 
-        <button type="submit">Salvar alterações</button>
+      <button
+        type="submit"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition"
+      >
+        Salvar alterações
+      </button>
       </form>
     </div>
   );
