@@ -1,17 +1,24 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { listarDoacoes, atualizarDoacao, type Doacao } from "../services/storage";
+import { listarDoacoes, atualizarDoacao, listarUsuarios, type Doacao } from "../services/storage";
 import QueroReceberButton from "../components/QueroReceberButton";
 
 export default function ItemCadastrado() {
   const { id } = useParams();
   const [doacao, setDoacao] = useState<Doacao | null>(null);
+  const [doador, setDoador] = useState<{ nome: string } | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const todas = listarDoacoes();
     const encontrada = todas.find((d) => d.id === id);
     setDoacao(encontrada || null);
+
+    if (encontrada) {
+      const usuarios = listarUsuarios();
+      const usuarioDoador = usuarios.find((u) => u.id === encontrada.userId);
+      setDoador(usuarioDoador || null);
+    }
   }, [id]);
 
   if (!doacao) {
@@ -63,6 +70,11 @@ export default function ItemCadastrado() {
         />
       )}
       <h3 className="text-lg font-semibold mb-2">{doacao.nome}</h3>
+      {doador && (
+        <p className="mb-1">
+          <span className="font-medium">Doador:</span> {doador.nome}
+        </p>
+      )}
       <p className="mb-1">
         <span className="font-medium">Descrição:</span> {doacao.descricao}
       </p>
