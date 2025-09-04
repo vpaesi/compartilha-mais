@@ -68,10 +68,16 @@ export default function NovaDoacao() {
         <textarea
           placeholder="Descrição"
           value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
+          onChange={(e) => {
+            if (e.target.value.length <= 200) setDescricao(e.target.value);
+          }}
           required
+          maxLength={200}
           className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 min-h-[80px]"
         />
+        <span className="text-gray-500 text-xs text-right block">
+          {descricao.length}/200 caracteres
+        </span>
         <select
           value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
