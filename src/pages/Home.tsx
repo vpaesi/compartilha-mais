@@ -1,6 +1,6 @@
 import HeroSection from "../components/HeroSection";
 import AvailableDonationsList from "../components/AvailableDonationsList";
-import HowItWorksSection from "../components/HowItWorksSection";
+import HowItWorksSection from "../components/howItWorksSection";
 
 export default function Home() {
   return (
