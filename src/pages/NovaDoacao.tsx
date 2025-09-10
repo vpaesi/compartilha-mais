@@ -1,0 +1,102 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { type Doacao, salvarDoacao } from "../services/storage";
+import { v4 as uuidv4 } from "uuid";
+
+export default function NovaDoacao() {
+  const [nome, setNome] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [categoria, setCategoria] = useState("Alimentos");
+  const [imagem, setImagem] = useState<string | undefined>(undefined);
+  const [usuarioId, setUsuarioId] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.getItem("usuarioLogado");
+    if (!user) {
+      alert("Você precisa estar logado para cadastrar uma doação.");
+      navigate("/login");
+    } else {
+      setUsuarioId(JSON.parse(user).id);
+    }
+  }, [navigate]);
+
+  const handleImagem = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagem(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!usuarioId) return;
+
+    const novaDoacao: Doacao = {
+      id: uuidv4(),
+      nome,
+      descricao,
+      categoria,
+      imagem,
+      status: "disponivel",
+      userId: usuarioId,
+      criadoEm: new Date().toISOString(),
+    };
+
+    salvarDoacao(novaDoacao);
+    alert("Doação cadastrada com sucesso!");
+    navigate("/minhas-doacoes");
+  };
+
+  return (
+    <div className="max-w-lg mx-auto mt-16 bg-white rounded-lg shadow-lg p-8 border border-gray-200">
+      <h2 className="text-2xl font-bold mb-6 text-center">Cadastrar Doação</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          type="text"
+          placeholder="Nome do item"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          required
+          className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <textarea
+          placeholder="Descrição"
+          value={descricao}
+          onChange={(e) => {
+            if (e.target.value.length <= 200) setDescricao(e.target.value);
+          }}
+          required
+          maxLength={200}
+          className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 min-h-[80px]"
+        />
+        <span className="text-gray-500 text-xs text-right block">
+          {descricao.length}/200 caracteres
+        </span>
+        <select
+          value={categoria}
+          onChange={(e) => setCategoria(e.target.value)}
+          className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option value="Alimentos">Alimentos</option>
+          <option value="Roupas">Roupas</option>
+          <option value="Higiene">Higiene</option>
+          <option value="Outros">Outros</option>
+        </select>
+        <input type="file" accept="image/*" onChange={handleImagem} className="block" />
+        {imagem && <img src={imagem} alt="Prévia" className="w-32 rounded border mx-auto" />}
+        <button
+          type="submit"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition-colors mt-2 shadow"
+        >
+          Cadastrar Doação
+        </button>
+      </form>
+    </div>
+  );
+}
